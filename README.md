@@ -1,3 +1,102 @@
+# Smart Campus — Sensor & Room Management API
+
+A RESTful API built with **JAX-RS (Jersey 3)** and **Grizzly HTTP server** for managing rooms and sensors across a university smart campus. All data is stored fully in-memory using thread-safe `ConcurrentHashMap` structures — no database is used.
+
+---
+
+## API Overview
+
+The API is versioned and served at: `http://localhost:8080/api/v1`
+
+### Resources
+
+| Resource | Base Path | Description |
+|----------|-----------|-------------|
+| Discovery | `GET /api/v1` | Lists all available resource endpoints and API metadata |
+| Rooms | `/api/v1/rooms` | Create, retrieve, and delete campus rooms |
+| Sensors | `/api/v1/sensors` | Register sensors linked to rooms; filter by type |
+| Readings | `/api/v1/sensors/{sensorId}/readings` | Post and retrieve historical sensor readings |
+
+
+---
+
+## How to Build & Run
+
+### Prerequisites
+
+- Java 17+ (tested on Java 25)
+- Maven 3.8+
+
+### Steps
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/<your-username>/SmartCampusSensorAndRoomManagementAPI.git
+cd SmartCampusSensorAndRoomManagementAPI
+
+# 2. Compile the project
+mvn compile
+
+# 3. Start the server
+mvn exec:java
+
+# The server starts at: http://localhost:8080/api/v1
+# Press ENTER in the terminal to stop the server.
+```
+
+---
+
+## Sample curl Commands
+
+### 1. Get API discovery info
+```bash
+curl -X GET http://localhost:8080/api/v1
+```
+
+### 2. Create a room
+```bash
+curl -X POST http://localhost:8080/api/v1/rooms \
+  -H "Content-Type: application/json" \
+  -d '{"id":"LIB-301","name":"Library Quiet Study","capacity":50}'
+```
+
+### 3. Get all rooms
+```bash
+curl -X GET http://localhost:8080/api/v1/rooms
+```
+
+### 4. Create a sensor linked to a room
+```bash
+curl -X POST http://localhost:8080/api/v1/sensors \
+  -H "Content-Type: application/json" \
+  -d '{"id":"CO2-001","type":"CO2","status":"ACTIVE","currentValue":400.0,"roomId":"LIB-301"}'
+```
+
+### 5. Filter sensors by type
+```bash
+curl -X GET "http://localhost:8080/api/v1/sensors?type=CO2"
+```
+
+### 6. Post a new reading for a sensor (also updates sensor's currentValue)
+```bash
+curl -X POST http://localhost:8080/api/v1/sensors/CO2-001/readings \
+  -H "Content-Type: application/json" \
+  -d '{"value":415.5}'
+```
+
+### 7. Attempt to delete a room that still has sensors (returns 409 Conflict)
+```bash
+curl -X DELETE http://localhost:8080/api/v1/rooms/LIB-301
+```
+
+### 8. Register a sensor with a non-existent roomId (returns 422 Unprocessable Entity)
+```bash
+curl -X POST http://localhost:8080/api/v1/sensors \
+  -H "Content-Type: application/json" \
+  -d '{"id":"TEMP-002","type":"Temperature","status":"ACTIVE","currentValue":22.0,"roomId":"FAKE-999"}'
+```
+
+---
 
 # Conceptual Report & Justifications
 
@@ -139,9 +238,7 @@ If a client sends `text/plain` or `application/xml`, JAX-RS automatically reject
 ### Question 2
 
 **You implemented this filtering using @QueryParam. Contrast this with an alterna-
-tive design where the type is part of the URL path (e.g., /api/vl/sensors/type/CO2). Why
-is the query parameter approach generally considered superior for filtering and searching
-collections?**
+**You implemented this filtering using @QueryParam. Contrast this with an alternative design where the type is part of the URL path (e.g., /api/v1/sensors/type/CO2). Why is the query parameter approach generally considered superior for filtering and searching collections?**
 
 ### Answer
 
