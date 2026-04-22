@@ -32,7 +32,7 @@ NetBeans makes working with this project straightforward using its In-Place / Ex
 1. **Add Tomcat to NetBeans:** Go to `Tools` > `Servers` > `Add Server`, choose *Apache Tomcat or TomEE*, and point it to your Tomcat 11 installation directory.
 2. **Set Project Target:** Right-click the project `SmartCampusSensorAndRoomManagementAPI` -> `Properties` -> `Run`. Select your **Tomcat 11** server from the dropdown. 
 3. **Run:** Click the **Run Project** button (green arrow) in NetBeans. It will automatically build and start the server.
-4. **Access the API:** The API will be active depending on your Context Path, for example: `http://localhost:8080/SmartCampusSensorAndRoomManagementAPI-1.0-SNAPSHOT/api/v1/`
+4. **Access the API:** The API will be active depending on your Context Path, for example:`GET http://localhost:8080/api/v1`
 
 ## How to Build and Run (Command Line / Manual)
 
