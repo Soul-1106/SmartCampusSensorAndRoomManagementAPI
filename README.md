@@ -112,7 +112,7 @@ By default, a JAX-RS Resource class is **request-scoped**, meaning a **new insta
 
 This supports stateless design because the object only exists for one request-response cycle. Therefore, data that must persist across requests should not be stored in instance variables.
 
-In this coursework, shared data is stored in a dedicated `DataStore` class using thread-safe collections such as `ConcurrentHashMap`.
+shared data is stored in a dedicated `DataStore` class using thread-safe collections such as `ConcurrentHashMap`.
 
 Benefits:
 
