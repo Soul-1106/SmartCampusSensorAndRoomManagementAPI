@@ -5,9 +5,9 @@ import org.example.Exceptions.RoomNotEmptyException;
 import org.example.Exceptions.SensorUnavailableException;
 
 
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;

@@ -1,8 +1,8 @@
 package org.example;
 
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.ExceptionMapper;
-import jakarta.ws.rs.ext.Provider;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +21,7 @@ public class Exceptions {
             ErrorResponse error = new ErrorResponse(409, exception.getMessage());
             return Response.status(Response.Status.CONFLICT)
                     .entity(error)
-                    .type(jakarta.ws.rs.core.MediaType.APPLICATION_JSON)
+                    .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                     .build();
         }
     }
@@ -39,7 +39,7 @@ public class Exceptions {
             ErrorResponse error = new ErrorResponse(422, exception.getMessage());
             return Response.status(422)
                     .entity(error)
-                    .type(jakarta.ws.rs.core.MediaType.APPLICATION_JSON)
+                    .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                     .build();
         }
     }
@@ -57,7 +57,7 @@ public class Exceptions {
             ErrorResponse error = new ErrorResponse(403, exception.getMessage());
             return Response.status(Response.Status.FORBIDDEN)
                     .entity(error)
-                    .type(jakarta.ws.rs.core.MediaType.APPLICATION_JSON)
+                    .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                     .build();
         }
     }
@@ -74,7 +74,7 @@ public class Exceptions {
             ErrorResponse error = new ErrorResponse(500, "Internal Server Error");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(error)
-                    .type(jakarta.ws.rs.core.MediaType.APPLICATION_JSON)
+                    .type(javax.ws.rs.core.MediaType.APPLICATION_JSON)
                     .build();
         }
     }

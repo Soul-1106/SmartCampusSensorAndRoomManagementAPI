@@ -1,12 +1,12 @@
 # Smart Campus Sensor and Room Management API
 
-A RESTful web service for managing university campus rooms, their installed environmental sensors, and recording sensor readings. Built using **Java 17**, **Jakarta EE 10 / JAX-RS (Jersey 3)**, and deployed on **Apache Tomcat**.
+A RESTful web service for managing university campus rooms, their installed environmental sensors, and recording sensor readings. Built using **Java 17**, **Java EE 8 / JAX-RS (Jersey 2)**, and deployed on **Apache Tomcat**.
 
 ## Technology Stack
 
 - **Java Version:** 17 or higher
-- **Server:** Apache Tomcat 11 (also backwards compatible with Tomcat 10.1.x)
-- **Framework:** Jersey 3 (JAX-RS / Jakarta RESTful Web Services)
+- **Server:** Apache Tomcat 9
+- **Framework:** Jersey 2.34 (JAX-RS / Java EE 8)
 - **Build Tool:** Maven
 
 ## API Overview
@@ -29,8 +29,8 @@ The API is served with a base path of `/api/v1`.
 
 NetBeans makes working with this project straightforward using its In-Place / Exploded Deployment:
 
-1. **Add Tomcat to NetBeans:** Go to `Tools` > `Servers` > `Add Server`, choose *Apache Tomcat or TomEE*, and point it to your Tomcat 11 installation directory.
-2. **Set Project Target:** Right-click the project `SmartCampusSensorAndRoomManagementAPI` -> `Properties` -> `Run`. Select your **Tomcat 11** server from the dropdown. 
+1. **Add Tomcat to NetBeans:** Go to `Tools` > `Servers` > `Add Server`, choose *Apache Tomcat or TomEE*, and point it to your Tomcat 9 installation directory.
+2. **Set Project Target:** Right-click the project `SmartCampusSensorAndRoomManagementAPI` -> `Properties` -> `Run`. Select your **Tomcat 9** server from the dropdown. 
 3. **Run:** Click the **Run Project** button (green arrow) in NetBeans. It will automatically build and start the server.
 4. **Access the API:** The API will be active depending on your Context Path, for example:`GET http://localhost:8080/api/v1`
 
@@ -46,7 +46,7 @@ If you are not using an IDE and want to manually build and deploy the `.war` pac
    `target/SmartCampusSensorAndRoomManagementAPI-1.0-SNAPSHOT.war`
 3. Copy this `.war` file directly into your Tomcat's `webapps` directory:
    ```bash
-   cp target/SmartCampusSensorAndRoomManagementAPI-1.0-SNAPSHOT.war /path/to/tomcat11/webapps/
+   cp target/SmartCampusSensorAndRoomManagementAPI-1.0-SNAPSHOT.war /path/to/tomcat9/webapps/
    ```
 4. Start Tomcat (`bin/startup.bat` or `bin/startup.sh`). It will automatically extract and deploy your application.
 5. Access your API!
@@ -62,7 +62,7 @@ If you are not using an IDE and want to manually build and deploy the `.war` pac
 1. Open this folder as a Maven project in NetBeans.
 2. In Projects view, right-click project -> Clean and Build.
 3. Confirm artifact exists at `target/ROOT.war`.
-4. Right-click project -> Run (or Deploy) to your configured Tomcat 10.1 server.
+4. Right-click project -> Run (or Deploy) to your configured Tomcat 9 server.
 5. Open:
    - `http://localhost:8080/api/v1`
 
