@@ -1,4 +1,4 @@
-package org.example;
+package org.example.error;
 
 public class ErrorResponse {
     private int statusCode;

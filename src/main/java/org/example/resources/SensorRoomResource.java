@@ -13,10 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.example.DataStore;
-import org.example.Exceptions.RoomNotEmptyException;
-import org.example.Room;
-import org.example.ErrorResponse;
+import org.example.error.ErrorResponse;
+import org.example.error.Exceptions.RoomNotEmptyException;
+import org.example.model.Room;
+import org.example.store.DataStore;
 
 @Path("/rooms")
 public class SensorRoomResource {

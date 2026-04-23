@@ -1,11 +1,14 @@
-package org.example;
-
+package org.example.store;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import org.example.model.Room;
+import org.example.model.Sensor;
+import org.example.model.SensorReading;
 
 public class DataStore {
 

@@ -13,7 +13,7 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.example.RestApplication</param-value>
+            <param-value>org.example.config.RestApplication</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

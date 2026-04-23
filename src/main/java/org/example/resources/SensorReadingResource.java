@@ -1,6 +1,5 @@
 package org.example.resources;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -10,11 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.example.DataStore;
-import org.example.Exceptions.SensorUnavailableException;
-import org.example.Sensor;
-import org.example.SensorReading;
-import org.example.ErrorResponse;
+import org.example.error.ErrorResponse;
+import org.example.error.Exceptions.SensorUnavailableException;
+import org.example.model.Sensor;
+import org.example.model.SensorReading;
+import org.example.store.DataStore;
 
 public class SensorReadingResource {
     private final String sensorId;

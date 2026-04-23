@@ -1,6 +1,8 @@
-package org.example;
+package org.example.config;
+
 
 import javax.ws.rs.ApplicationPath;
+
 import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/api/v1")

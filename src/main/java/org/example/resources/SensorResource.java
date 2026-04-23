@@ -14,11 +14,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.example.DataStore;
-import org.example.Exceptions.LinkedResourceNotFoundException;
-import org.example.Room;
-import org.example.Sensor;
-import org.example.ErrorResponse;
+import org.example.error.ErrorResponse;
+import org.example.error.Exceptions.LinkedResourceNotFoundException;
+import org.example.model.Room;
+import org.example.model.Sensor;
+import org.example.store.DataStore;
 
 @Path("/sensors")
 public class SensorResource {
