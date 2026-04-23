@@ -6,8 +6,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.example.error.ErrorResponse;
 import org.example.error.Exceptions.SensorUnavailableException;
@@ -18,6 +20,9 @@ import org.example.store.DataStore;
 public class SensorReadingResource {
     private final String sensorId;
     private final DataStore dataStore = DataStore.getInstance();
+
+    @Context
+    private UriInfo uriInfo;
 
     public SensorReadingResource(String sensorId) {
         this.sensorId = sensorId;
@@ -66,6 +71,8 @@ public class SensorReadingResource {
         dataStore.addSensorReading(sensorId, reading);
         sensor.setCurrentValue(reading.getValue());
 
-        return Response.status(Response.Status.CREATED).entity(reading).build();
+        return Response.created(uriInfo.getAbsolutePathBuilder().path(reading.getId()).build())
+                .entity(reading)
+                .build();
     }
 }

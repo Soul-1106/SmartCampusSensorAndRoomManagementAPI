@@ -10,8 +10,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.example.error.ErrorResponse;
 import org.example.error.Exceptions.RoomNotEmptyException;
@@ -21,6 +23,9 @@ import org.example.store.DataStore;
 @Path("/rooms")
 public class SensorRoomResource {
     private final DataStore dataStore = DataStore.getInstance();
+
+    @Context
+    private UriInfo uriInfo;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,7 +46,9 @@ public class SensorRoomResource {
             room.setId(UUID.randomUUID().toString());
         }
         dataStore.addRoom(room);
-        return Response.status(Response.Status.CREATED).entity(room).build();
+        return Response.created(uriInfo.getAbsolutePathBuilder().path(room.getId()).build())
+                .entity(room)
+                .build();
     }
 
     @GET
