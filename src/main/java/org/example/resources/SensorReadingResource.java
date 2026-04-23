@@ -6,7 +6,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -20,12 +19,11 @@ import org.example.store.DataStore;
 public class SensorReadingResource {
     private final String sensorId;
     private final DataStore dataStore = DataStore.getInstance();
+    private final UriInfo uriInfo;
 
-    @Context
-    private UriInfo uriInfo;
-
-    public SensorReadingResource(String sensorId) {
+    public SensorReadingResource(String sensorId, UriInfo uriInfo) {
         this.sensorId = sensorId;
+        this.uriInfo = uriInfo;
     }
 
     @GET

@@ -89,6 +89,6 @@ public class SensorResource {
 
     @Path("/{sensorId}/readings")
     public SensorReadingResource getReadingsResource(@PathParam("sensorId") String sensorId) {
-        return new SensorReadingResource(sensorId);
+        return new SensorReadingResource(sensorId, uriInfo);
     }
 }
