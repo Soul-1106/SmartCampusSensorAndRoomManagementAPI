@@ -18,6 +18,7 @@ import org.example.DataStore;
 import org.example.Exceptions.LinkedResourceNotFoundException;
 import org.example.Room;
 import org.example.Sensor;
+import org.example.ErrorResponse;
 
 @Path("/sensors")
 public class SensorResource {
@@ -36,8 +37,10 @@ public class SensorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSensor(Sensor sensor) {
-        if (sensor.getRoomId() == null || sensor.getRoomId().trim().isEmpty()) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Room ID cannot be empty").build();
+        if (sensor == null || sensor.getRoomId() == null || sensor.getRoomId().trim().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponse(400, "Bad Request", "Room ID cannot be empty"))
+                    .build();
         }
         Room room = dataStore.getRoom(sensor.getRoomId());
         if (room == null) {
@@ -56,7 +59,9 @@ public class SensorResource {
     public Response getSensor(@PathParam("sensorId") String sensorId) {
         Sensor sensor = dataStore.getSensor(sensorId);
         if (sensor == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor not found"))
+                    .build();
         }
         return Response.ok(sensor).build();
     }
@@ -67,7 +72,9 @@ public class SensorResource {
     public Response deleteSensor(@PathParam("sensorId") String sensorId) {
         Sensor sensor = dataStore.getSensor(sensorId);
         if (sensor == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor not found"))
+                    .build();
         }
         dataStore.removeSensor(sensorId);
         return Response.noContent().build();

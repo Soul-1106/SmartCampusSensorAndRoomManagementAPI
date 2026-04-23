@@ -14,6 +14,7 @@ import org.example.DataStore;
 import org.example.Exceptions.SensorUnavailableException;
 import org.example.Sensor;
 import org.example.SensorReading;
+import org.example.ErrorResponse;
 
 public class SensorReadingResource {
     private final String sensorId;
@@ -25,8 +26,14 @@ public class SensorReadingResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SensorReading> getReadings() {
-        return dataStore.getSensorReadings(sensorId);
+    public Response getReadings() {
+        Sensor sensor = dataStore.getSensor(sensorId);
+        if (sensor == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor not found"))
+                    .build();
+        }
+        return Response.ok(dataStore.getSensorReadings(sensorId)).build();
     }
 
     @POST
@@ -35,14 +42,22 @@ public class SensorReadingResource {
     public Response addReading(SensorReading reading) {
         Sensor sensor = dataStore.getSensor(sensorId);
         if (sensor == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Sensor not found").build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Sensor not found"))
+                    .build();
         }
 
         if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus()) || "OFFLINE".equalsIgnoreCase(sensor.getStatus())) {
             throw new SensorUnavailableException("Sensor is unavailable to accept readings.");
         }
+        
+        if (reading == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponse(400, "Bad Request", "Reading data is required"))
+                    .build();
+        }
 
-        if (reading.getId() == null) {
+        if (reading.getId() == null || reading.getId().trim().isEmpty()) {
             reading.setId(UUID.randomUUID().toString());
         }
         if (reading.getTimestamp() == 0) {

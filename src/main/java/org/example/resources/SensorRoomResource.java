@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import org.example.DataStore;
 import org.example.Exceptions.RoomNotEmptyException;
 import org.example.Room;
+import org.example.ErrorResponse;
 
 @Path("/rooms")
 public class SensorRoomResource {
@@ -31,6 +32,11 @@ public class SensorRoomResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createRoom(Room room) {
+        if (room == null || room.getName() == null || room.getName().trim().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponse(400, "Bad Request", "Room name is required"))
+                    .build();
+        }
         if (room.getId() == null || room.getId().trim().isEmpty()) {
             room.setId(UUID.randomUUID().toString());
         }
@@ -44,7 +50,9 @@ public class SensorRoomResource {
     public Response getRoom(@PathParam("roomId") String roomId) {
         Room room = dataStore.getRoom(roomId);
         if (room == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Room not found"))
+                    .build();
         }
         return Response.ok(room).build();
     }
@@ -55,7 +63,9 @@ public class SensorRoomResource {
     public Response deleteRoom(@PathParam("roomId") String roomId) {
         Room room = dataStore.getRoom(roomId);
         if (room == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ErrorResponse(404, "Not Found", "Room not found"))
+                    .build();
         }
         if (!room.getSensorIds().isEmpty()) {
             throw new RoomNotEmptyException("Cannot delete room; it contains active sensors.");
